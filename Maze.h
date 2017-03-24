@@ -1,3 +1,4 @@
+
 /**********************************************
 * Program:  Maze.h                            *
 * Author:   Autumn Anthony                    *
@@ -16,13 +17,16 @@ class Maze{
 		Maze();
 		bool OpenAndLoad(char * filename);
 		void DisplayMaze();
+		void DropMouse();
+		void MoveNorth();
+		void MoveEast();
+		void MoveSouth();
+		void MoveWest();
 		
-	private:
-	char filename[30];
+	private:	
 		int row;
 		int col;
-		char * mazeptr;
-		ifstream inFile;
+		char * mazeptr;		
 };
 
 Maze::Maze()
@@ -40,6 +44,7 @@ bool Maze::OpenAndLoad(char * filename)
 // Pre: Takes in a file name from the command line or from the user
 // Post: Opens the file if the user entered a valid file name 
 {
+	ifstream inFile;
 	inFile.open(filename);		// Attempts to open the file 
 		
 	while (!inFile)		// While the file cannot be opened 
@@ -80,3 +85,124 @@ void Maze::DisplayMaze()
 		cout << endl;
 	}
 }
+void Maze::DropMouse()
+{
+	int rowPosUser, colPosUser; // Starts at one for the user 
+	int rowPos, colPos; // Starts at zero for us 
+	char direction;
+	cout << "Please enter the row (between 1 and " << row << "), the column (between 1 and " << col << "), and the direction (N, S, E, W) that you would like the mouse to face" << endl;
+	cin >> rowPosUser;
+	cin >> colPosUser;
+	cin >> direction;
+	
+	while (rowPosUser < 1 || rowPosUser > row || colPosUser < 1 || colPosUser > col || *(mazeptr + (rowPosUser * col) + colPosUser) == '#' || (direction != 'N' && direction != 'E' && direction != 'S' && direction != 'W'))
+	{
+		if (rowPosUser < 1 || rowPosUser > row)
+			cerr << "The row you entered is outside of the maze." << endl;
+		if (colPosUser < 1 || colPosUser > col)
+			cerr << "The column you entered is outside of the maze." << endl;
+		if (*(mazeptr + (rowPosUser * col) + colPosUser) == '#')
+			cerr << "You dropped the mouse on the wall." << endl;
+		if (direction != 'N' && direction != 'E' && direction != 'S' && direction != 'W')
+			cerr << "You did not enter a correct direction for the mouse to face." << endl;
+		
+		cout << "Please enter the row (between 1 and " << row << "), the column (between 1 and " << col << "), and the direction (N, S, E, W) that you would like the mouse to face" << endl;
+		cin >> rowPosUser;
+		cin >> colPosUser;
+		cin >> direction;
+	}
+	
+	//while (the row or column are not real numbers)
+	
+	rowPos = rowPosUser - 1;
+	colPos = rowPosUser - 1;
+	if (direction == 'N')
+	{
+		*(mazeptr + (rowPos * col) + colPos) = '^';
+		DisplayMaze();
+	}
+	if (direction == 'E')
+	{
+		*(mazeptr + (rowPos * col) + colPos) = '>';
+		DisplayMaze();
+	}
+	if (direction == 'S')
+	{
+		*(mazeptr + (rowPos * col) + colPos) = 'v';
+		DisplayMaze();
+	}
+	if (direction == 'W')
+	{
+		*(mazeptr + (rowPos * col) + colPos) = '<';
+		DisplayMaze();
+	}	
+}
+// North
+void Maze::MoveNorth()
+while (direction == 'N' && *(mazeptr + ((rowPos - 1) * col) + colPos) = '*' && *(mazeptr + (rowPos * col) + (colPos + 1)) = '#')
+{
+	rowPos --; // Goes up a row 
+	*(mazeptr + (rowPos * col) + colPos) = '^';
+	DisplayMaze();
+}
+if (direction == 'N' && *(mazeptr + ((rowPos - 1) * col) + colPos) = '#' && *(mazeptr + (rowPos * col) + (colPos + 1)) = '#')
+{
+	direction = 'W';
+	*(mazeptr + (rowPos * col) + colPos) = '<';	
+	DisplayMaze();
+	MoveWest();
+}
+
+
+// West 
+void Maze::MoveWest()
+while (direction == 'W' && *(mazeptr + (rowPos * col) + (colPos - 1)) = '*' && *(mazeptr + ((rowPos- 1) * col) + colPos) = '#')
+{
+	colPos --; // Goes left a column 
+	*(mazeptr + (rowPos * col) + colPos) = '<';
+	DisplayMaze();
+}
+if (direction == 'W' && *(mazeptr + (rowPos * col) + (colPos - 1)) = '#' && *(mazeptr + ((rowPos- 1) * col) + colPos) = '#')
+{
+	direction = 'S';
+	*(mazeptr + (rowPos * col) + colPos) = 'v';
+	DisplayMaze();
+	MoveSouth();
+}
+
+// South 
+void Maze::MoveSouth()
+while (direction == 'S' && *(mazeptr + ((rowPos + 1) * col) + colPos) = '*' && *(mazeptr + (rowPos * col) + (colPos - 1)) = '#')
+{
+	rowPos ++; // Goes down a row
+	*(mazeptr + (rowPos * col) + (colPos - 1)) = '<';
+	DisplayMaze();
+}
+if (direction == 'S' && *(mazeptr + ((rowPos + 1) * col) + colPos) = '#' && *(mazeptr + (rowPos * col) + (colPos - 1)) = '#')
+{
+	direction = 'E';
+	*(mazeptr + (rowPos * col) + colPos) = '>';
+	DisplayMaze();
+	MoveEast();
+}
+	
+// East 
+void Maze::MoveEast()
+while (direction == 'E' && *(mazeptr + (rowPos * col) + (colPos + 1)) = '*' && *(mazeptr + ((rowPos+ 1) * col) + colPos) = '#')
+{
+	colPos ++; // Goes right a column 
+	*(mazeptr + (rowPos * col) + colPos) = '<';
+	DisplayMaze();
+}
+if (direction == 'W' && *(mazeptr + (rowPos * col) + (colPos + 1)) = '#' && *(mazeptr + ((rowPos+ 1) * col) + colPos) = '#')
+{
+	direction = 'N';
+	*(mazeptr + (rowPos * col) + colPos) = '^';
+	DisplayMaze();
+	MoveNorth();
+}	
+	
+	
+	
+	
+	
