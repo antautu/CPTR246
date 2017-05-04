@@ -12,13 +12,16 @@
 #include "Maze.h"
 #include <iomanip>
 #include <cstdlib>
+#include <cstring>
+#include <unistd.h>
+#include <string> 
 
 using namespace std;
 
 int main(int argc, char * argv[]) 
 {
 	Maze myMaze;		// Declares a new maze 
-	char * filename;		// Character pointer for the name of the file to be opened
+	char filename[20];		// Character pointer for the name of the file to be opened
 	
 	if (argc == 1)		// If the user does not enter the name of the file on the command line
 	{
@@ -31,11 +34,12 @@ int main(int argc, char * argv[])
 	
 	else		// If the user enters the name of the file on the command line 
 	{
-		filename = argv[1];		// The name of the file is what is entered on the command line 
+		strcpy(filename, argv[1]);		// The name of the file is what is entered on the command line 
 		myMaze.OpenAndLoad(filename);		// Calls the method to open the file 
 		myMaze.DisplayMaze();		// Calls the method to display the maze
 	}
 	
+	myMaze.DropMouse();		// Drop the mouse and see if it finds its way out 
 	
 	return 0;
 }
