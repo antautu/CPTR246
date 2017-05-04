@@ -8,7 +8,7 @@
 #include <iostream>
 #include <cstdlib> 
 #include "IntegerLinkedList2.h"
- 
+
 using namespace std;
 
 int DisplayMenu(){
@@ -34,7 +34,6 @@ int DisplayMenu(){
 	cout << "\t\t\t\t7  Average of the numbers" << endl;
 	cout << "\t\t\t\t8  Number of even integers" << endl;
 	cout << "\t\t\t\t9  Empty the linked list" << endl;
-	cout << "\t\t\t\t10  Sum of the numbers recursively" << endl;
 	cout << "\t\t\t\t0  Enough already!" << endl;
 	cout << endl;
 	cout << "\t\t\tPlease make your selection: ";
@@ -122,9 +121,6 @@ int main(int argc, char * argv[]) {
 				break;
 				
 			case 9: myList.Empty();
-				break;
-				
-			case 10: myList.SumRecursively();
 				break;
 				
 			default:cerr << "That was not a valid option." << endl;

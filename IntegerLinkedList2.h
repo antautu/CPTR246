@@ -21,7 +21,6 @@ class IntegerLinkedList{
 		bool RemoveNode(int whichOne);
 		bool LoadUnsorted(char * filename);
 		void Sum();
-		void SumRecursively();
 		int Length();
 		void Average();
 		void HowManyEven();
@@ -30,7 +29,6 @@ class IntegerLinkedList{
 	private:
 		IntegerNode * first;
 		IntegerNode * last;
-		int SumRecursivelyHelper(IntegerNode * first);
 };
 
 IntegerLinkedList::IntegerLinkedList(){
@@ -269,29 +267,6 @@ void IntegerLinkedList::Sum(){
 	}
 	
 	cout << "The sum of the integers in the list is " << sum << endl;		// Displays the sum
-}
-
-void IntegerLinkedList::SumRecursively(){
-// pre:		None	
-// post: 	Returns the sum of the numbers in the list 	
-// purpose:	To find the sum of the numbers in the list recursively and return it  
-
-	cout << "The sum of the integers in the list found recursively is " << SumRecursivelyHelper(first) << endl;
-
-}
-
-int IntegerLinkedList::SumRecursivelyHelper(IntegerNode * first){
-// pre:		None	
-// post: 	Returns the sum of the numbers in the list 	
-// purpose:	To find the sum of the numbers in the list recursively and return it  
-
-	IntegerNode * next;
-	next = first;
-	if(!first)
-		return 0;
-	else
-		return next -> getValue() + SumRecursivelyHelper(next -> getNext());
-
 }
 
 int IntegerLinkedList::Length(){
