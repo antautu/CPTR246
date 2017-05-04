@@ -45,6 +45,11 @@ int main() {
 				cout << "Processing will resume shortly ..." << endl;
 				sleep(4);
 				break;
+			case 4:
+				myQueue.LineJumper(getValue(), getPlace());
+				cout << "Processing will resume shortly ..." << endl;
+				sleep(4);
+				break;
 		}
 
 		option = userMenu();			// get next request
@@ -66,11 +71,12 @@ int userMenu(){
 	cout << setw(50) << "   1      Enqueue       " << endl;
 	cout << setw(50) << "   2      Dequeue       " << endl;
 	cout << setw(50) << "   3      Display Queue " << endl;
+	cout << setw(50) << "   4      Line Jumper   " << endl;
 	cout << endl << endl;
 	cout << "Select your option: ";
 	cin >> option;			// get option from user
 					// did they enter a good value
-	while (cin.fail() || option > 3  ||  option < 0){
+	while (cin.fail() || option > 4  ||  option < 0){
 		cin.clear();
 		cin.ignore(80, '\n');	// skip bad data
 		cout << "Invalid option.  Please select again:";
